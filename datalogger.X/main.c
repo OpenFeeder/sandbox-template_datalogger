@@ -17,7 +17,7 @@
         Device            :  PIC24FJ256GB406
     The generated drivers are tested against the following:
         Compiler          :  XC16 v1.35
-        MPLAB 	          :  MPLAB X v5.05
+        MPLAB 	          :  MPLAB X v5.10
  */
 
 /*
@@ -45,33 +45,84 @@
 /**
   Section: Included Files
  */
+#include <xc.h>
 #include <stdio.h>
+#include <stdbool.h>
+
+//#define _XTAL_FREQ 8000000  // for XC8...
+#define FCY 8000000UL/2 // instruction cycle freq for XC16 - FIXME : Test and measure blink with __delay_ms( 10 ) to find right FCY value 
+#include <libpic30.h>
+
 #include "mcc_generated_files/system.h"
 #include "mcc_generated_files/tmr1.h"
+#include "mcc_generated_files/uart1.h"
+
 #include "src/driver/led_status.h"
+#include "src/driver/dht_sensor.h"
+
+
+int main( void )
+{
+    TRISEbits.TRISE4 = 0; // RE04
+    while ( 1 )
+    {
+        LATEbits.LATE4 = 1;
+        __delay_ms( 250 );
+        LATEbits.LATE4 = 0;
+        __delay_ms( 250 );
+    }
+    return 0;
+}
 
 /*
                          Main application
  */
-int main(void)
+int main2( void )
 {
     // initialize the device
-    SYSTEM_Initialize();
+    SYSTEM_Initialize( );
 
-    printf( "Demo Template OF\n" );
-    
-    /* Status LED blinks */
-    setLedsStatusColor(LEDS_ON);
-    int i;
-    for (i = 0; i < 5; i++)
+    __delay_ms( 1 );
+    printf( "Demo template datalogger\nread DHT22 sensor.\n\r" );
+    while ( !( UART1_StatusGet( ) & UART1_TX_COMPLETE ) )
     {
-        setLedsStatusColor(LEDS_ON);
-        while ( !TMR1_GetElapsedThenClear() );
-        setLedsStatusColor(LEDS_OFF);
-        while ( !TMR1_GetElapsedThenClear() );
+        // Wait for the tranmission to complete
     }
 
-    while (1)
+    /* Status LED blinks */
+    setLedsStatusColor( LEDS_ON );
+    int i;
+    for ( i = 0; i < 5; i++ )
+    {
+        setLedsStatusColor( LEDS_ON );
+        while ( !TMR1_GetElapsedThenClear( ) );
+        setLedsStatusColor( LEDS_OFF );
+        while ( !TMR1_GetElapsedThenClear( ) );
+    }
+
+    /* Read DHT22 sensor */
+    //INTERRUPT_GlobalInterruptDisable( ); // Disable the Global Interrupts
+    if ( true == DHT22_Detect( ) )
+    {
+        int i;
+
+        for ( i = 0; i < 40; ++i )
+        {
+            DHT22_readbit( );
+        }
+
+        printf( "Sensor data ready\n" );
+    }
+    else
+    {
+        printf( "Sensor default\n" );
+    }
+    //INTERRUPT_GlobalInterruptEnable( );
+
+    printf( "Done\n" );
+
+
+    while ( 1 )
     {
         // Add your application code
     }

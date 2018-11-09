@@ -201,6 +201,152 @@
 #define LED_STATUS_Y_SetDigitalOutput() _TRISE3 = 0
 /**
   @Summary
+    Sets the GPIO pin, RE4, high using LATE4.
+
+  @Description
+    Sets the GPIO pin, RE4, high using LATE4.
+
+  @Preconditions
+    The RE4 must be set to an output.
+
+  @Returns
+    None.
+
+  @Param
+    None.
+
+  @Example
+    <code>
+    // Set RE4 high (1)
+    DHT22_SENSOR_SetHigh();
+    </code>
+
+*/
+#define DHT22_SENSOR_SetHigh()          _LATE4 = 1
+/**
+  @Summary
+    Sets the GPIO pin, RE4, low using LATE4.
+
+  @Description
+    Sets the GPIO pin, RE4, low using LATE4.
+
+  @Preconditions
+    The RE4 must be set to an output.
+
+  @Returns
+    None.
+
+  @Param
+    None.
+
+  @Example
+    <code>
+    // Set RE4 low (0)
+    DHT22_SENSOR_SetLow();
+    </code>
+
+*/
+#define DHT22_SENSOR_SetLow()           _LATE4 = 0
+/**
+  @Summary
+    Toggles the GPIO pin, RE4, using LATE4.
+
+  @Description
+    Toggles the GPIO pin, RE4, using LATE4.
+
+  @Preconditions
+    The RE4 must be set to an output.
+
+  @Returns
+    None.
+
+  @Param
+    None.
+
+  @Example
+    <code>
+    // Toggle RE4
+    DHT22_SENSOR_Toggle();
+    </code>
+
+*/
+#define DHT22_SENSOR_Toggle()           _LATE4 ^= 1
+/**
+  @Summary
+    Reads the value of the GPIO pin, RE4.
+
+  @Description
+    Reads the value of the GPIO pin, RE4.
+
+  @Preconditions
+    None.
+
+  @Returns
+    None.
+
+  @Param
+    None.
+
+  @Example
+    <code>
+    uint16_t portValue;
+
+    // Read RE4
+    postValue = DHT22_SENSOR_GetValue();
+    </code>
+
+*/
+#define DHT22_SENSOR_GetValue()         _RE4
+/**
+  @Summary
+    Configures the GPIO pin, RE4, as an input.
+
+  @Description
+    Configures the GPIO pin, RE4, as an input.
+
+  @Preconditions
+    None.
+
+  @Returns
+    None.
+
+  @Param
+    None.
+
+  @Example
+    <code>
+    // Sets the RE4 as an input
+    DHT22_SENSOR_SetDigitalInput();
+    </code>
+
+*/
+#define DHT22_SENSOR_SetDigitalInput()  _TRISE4 = 1
+/**
+  @Summary
+    Configures the GPIO pin, RE4, as an output.
+
+  @Description
+    Configures the GPIO pin, RE4, as an output.
+
+  @Preconditions
+    None.
+
+  @Returns
+    None.
+
+  @Param
+    None.
+
+  @Example
+    <code>
+    // Sets the RE4 as an output
+    DHT22_SENSOR_SetDigitalOutput();
+    </code>
+
+*/
+#define DHT22_SENSOR_SetDigitalOutput() _TRISE4 = 0
+/**
+  @Summary
     Sets the GPIO pin, RE5, high using LATE5.
 
   @Description

@@ -5,8 +5,8 @@
  * @date 09/09/2016
  */
 
-#ifndef _LED_STATUS_HEADER_H
-#define _LED_STATUS_HEADER_H
+#ifndef __LED_STATUS_H
+#define __LED_STATUS_H
 
 typedef enum
 {
@@ -43,7 +43,7 @@ void LedsStatusBlink( LED_STATUS, LED_STATUS, uint16_t, uint16_t );
 void checkLedsStatus( void );
 
 
-#endif /* _LED_STATUS_HEADER_H */
+#endif /* __LED_STATUS_H */
 
 
 /*******************************************************************************

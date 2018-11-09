@@ -17,12 +17,12 @@
          <string>class com.microchip.mcc.mcu16.systemManager.clk.Clock</string>
       </entry>
       <entry>
-         <string>WATCHDOG</string>
-         <string>class com.microchip.mcc.mcu16.systemManager.wdt.Wdt</string>
-      </entry>
-      <entry>
          <string>Pin Module</string>
          <string>class com.microchip.mcc.mcu16.pinManager.PinManager</string>
+      </entry>
+      <entry>
+         <string>WATCHDOG</string>
+         <string>class com.microchip.mcc.mcu16.systemManager.wdt.Wdt</string>
       </entry>
       <entry>
          <string>RESET</string>
@@ -37,12 +37,12 @@
          <string>class com.microchip.mcc.mcu16.interruptManager.InterruptManager</string>
       </entry>
       <entry>
-         <string>UART1</string>
-         <string>class com.microchip.mcc.mcu16.modules.uart.UART</string>
-      </entry>
-      <entry>
          <string>TMR1</string>
          <string>class com.microchip.mcc.mcu16.modules.tmr.TMR</string>
+      </entry>
+      <entry>
+         <string>UART1</string>
+         <string>class com.microchip.mcc.mcu16.modules.uart.UART</string>
       </entry>
    </usedClasses>
    <usedLibraries class="java.util.ArrayList">
@@ -1195,7 +1195,7 @@
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.RegisterKey" moduleName="Pin Module" registerAlias="ANSE"/>
-         <value>23</value>
+         <value>7</value>
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.OptionKey" moduleName="UART1" registerAlias="USTA" settingAlias="URXISEL" alias="RX_BUF_FULL"/>
@@ -3803,7 +3803,7 @@
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="Pin Module" name="RE4"/>
-         <value>disabled</value>
+         <value>input</value>
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.OptionKey" moduleName="Pin Module" registerAlias="IOCPF" settingAlias="IOCPF6" alias="enabled"/>
@@ -6779,7 +6779,7 @@
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="Pin Module" name="customNameUserSet RE4"/>
-         <value>disabled</value>
+         <value>enabled</value>
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="Pin Module" name="customNameUserSet RE5"/>
@@ -12887,7 +12887,7 @@
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="Pin Module" name="Custom Name RE4"/>
-         <value/>
+         <value>DHT22_SENSOR</value>
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.OptionKey" moduleName="Pin Module" registerAlias="IOCFE" settingAlias="IOCFE7" alias="enabled"/>
@@ -13999,7 +13999,7 @@
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.SettingKey" moduleName="Pin Module" registerAlias="ANSE" settingAlias="ANSELE4"/>
-         <value>analog</value>
+         <value>digital</value>
       </entry>
       <entry>
          <key class="com.microchip.mcc.core.tokenManager.CustomKey" moduleName="INTERNAL OSCILLATOR" name="CLOCK_FOSC"/>
@@ -14049,19 +14049,19 @@
       </entry>
       <entry>
          <file>mcc_generated_files\mcc.h</file>
-         <hash>09703d93e41196807f348d2b62da0a39c40e8a7ed25e5628001f8103b2891254</hash>
+         <hash>9b35059816eeb564b46104cd9f7b8db9d870c625910060230e64026cb654c7e6</hash>
       </entry>
       <entry>
          <file>mcc_generated_files\uart1.h</file>
          <hash>7ce943f1812200af9b03d58ccf7993f451ca7a3dda438d65be45fbbfe94ba8cc</hash>
       </entry>
       <entry>
-         <file>mcc_generated_files\uart1.c</file>
-         <hash>78bb69613506c79223367c66321967c968589dc3c9d592c147b25219d17195ea</hash>
-      </entry>
-      <entry>
          <file>mcc_generated_files\tmr1.h</file>
          <hash>8ae4546085fe4a48281083ca702de870698cc779340d78ebf7b661743993218a</hash>
+      </entry>
+      <entry>
+         <file>mcc_generated_files\uart1.c</file>
+         <hash>78bb69613506c79223367c66321967c968589dc3c9d592c147b25219d17195ea</hash>
       </entry>
       <entry>
          <file>mcc_generated_files\clock.c</file>
@@ -14073,7 +14073,7 @@
       </entry>
       <entry>
          <file>mcc_generated_files\pin_manager.h</file>
-         <hash>bd719486247d4a3805aa46b45a6833c5e92a148b84f01df9508ac29f32fb9922</hash>
+         <hash>828ce1417caebfce5c5b321804c4a4d0df956c38974b79379fd6397a22189f4f</hash>
       </entry>
       <entry>
          <file>mcc_generated_files\tmr1.c</file>
@@ -14081,7 +14081,7 @@
       </entry>
       <entry>
          <file>mcc_generated_files\pin_manager.c</file>
-         <hash>25f5c32c63769699a01cf57be4f03c3a609d2b27b07d93e8874bde8e4d51bcee</hash>
+         <hash>31e97cce5cfa421e44776d9d41ee5782558015f6d0ffee93e7d0cd46c5c13117</hash>
       </entry>
       <entry>
          <file>mcc_generated_files\system.h</file>
@@ -14089,7 +14089,7 @@
       </entry>
       <entry>
          <file>mcc_generated_files\system.c</file>
-         <hash>44af38f0a17e3c9737986b410465a82ed671c69398d2e26501f3e954633daae5</hash>
+         <hash>a8240aacc12787c50590f171633286cbf031961984d45465697d8801a630e081</hash>
       </entry>
       <entry>
          <file>mcc_generated_files\traps.c</file>
@@ -14105,7 +14105,7 @@
       </entry>
       <entry>
          <file>mcc_generated_files\interrupt_manager.c</file>
-         <hash>38706f2673f88cb47206115797a0b9d269546b0d138bd95a2dc3bdd4015e0e88</hash>
+         <hash>cca3a1a4d870f1984e21ff37473316ab822e88d375476cbd527902141a5da9a4</hash>
       </entry>
       <entry>
          <file>mcc_generated_files\mcc.c</file>
