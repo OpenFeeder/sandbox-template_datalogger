@@ -8,6 +8,8 @@
 #ifndef __LED_STATUS_H
 #define __LED_STATUS_H
 
+#include "delay.h"
+
 typedef enum
 {
     LEDS_OFF,
@@ -35,8 +37,6 @@ typedef enum
 } LED_STATUS;
 
 void setLedsStatusColor( LED_STATUS );
-//void doFlashEachLedsStatus( uint16_t flash_duration );
-//void doLedsStatusBlink( LED_STATUS, uint8_t, uint16_t, uint16_t );
 
 void LedsStatusBlink( LED_STATUS, LED_STATUS, uint16_t, uint16_t );
 

@@ -63,17 +63,17 @@ void PIN_MANAGER_Initialize(void)
     LATC = 0x0000;
     LATD = 0x0000;
     LATE = 0x0000;
-    LATF = 0x0000;
+    LATF = 0x0001;
     LATG = 0x0000;
 
     /****************************************************************************
      * Setting the GPIO Direction SFR(s)
      ***************************************************************************/
-    TRISB = 0x7FFF;
+    TRISB = 0x5FFF;
     TRISC = 0x9000;
     TRISD = 0x0FFF;
     TRISE = 0x0017;
-    TRISF = 0x00BB;
+    TRISF = 0x00BA;
     TRISG = 0x03CC;
 
     /****************************************************************************
@@ -115,10 +115,10 @@ void PIN_MANAGER_Initialize(void)
      * Setting the Analog/Digital Configuration SFR(s)
      ***************************************************************************/
     ANSA = 0xC6ED;
-    ANSB = 0x3FFC;
+    ANSB = 0x1FFC;
     ANSD = 0x0FFF;
     ANSE = 0x0007;
-    ANSF = 0x313F;
+    ANSF = 0x313E;
     ANSG = 0xF3C3;
     ANSH = 0x001F;
 

@@ -198,36 +198,36 @@ void setLedsStatusColor( LED_STATUS status )
 //}
 //
 //
-//void checkLedsStatus( void )
-//{
-//    uint16_t delay_ms = 250;
-//    
-//    setLedsStatusColor( LEDS_OFF );
-//
-//    setLedsStatusColor( LED_GREEN );
-//    setDelayMsLEDsStatus( delay_ms );
-//    while ( false == isDelayMsEndingLEDsStatus( ) );
-//    setLedsStatusColor( LED_BLUE );
-//    setDelayMsLEDsStatus( delay_ms );
-//    while ( false == isDelayMsEndingLEDsStatus( ) );
-//    setLedsStatusColor( LED_YELLOW );
-//    setDelayMsLEDsStatus( delay_ms );
-//    while ( false == isDelayMsEndingLEDsStatus( ) );
-//    setLedsStatusColor( LED_RED );
-//    setDelayMsLEDsStatus( delay_ms );
-//    while ( false == isDelayMsEndingLEDsStatus( ) );
-//    setLedsStatusColor( LED_YELLOW );
-//    setDelayMsLEDsStatus( delay_ms );
-//    while ( false == isDelayMsEndingLEDsStatus( ) );
-//    setLedsStatusColor( LED_BLUE );
-//    setDelayMsLEDsStatus( delay_ms );
-//    while ( false == isDelayMsEndingLEDsStatus( ) );
-//    setLedsStatusColor( LED_GREEN );
-//    setDelayMsLEDsStatus( delay_ms );
-//    while ( false == isDelayMsEndingLEDsStatus( ) );
-//
-//    setLedsStatusColor( LEDS_OFF );
-//}
+void checkLedsStatus( void )
+{
+    uint16_t delay_ms = 200;
+    
+    setLedsStatusColor( LEDS_OFF );
+
+    setLedsStatusColor( LED_GREEN );
+    setDelayMsLEDsStatus( delay_ms );
+    while ( false == isDelayMsEndingLEDsStatus( ) );
+    setLedsStatusColor( LED_BLUE );
+    setDelayMsLEDsStatus( delay_ms );
+    while ( false == isDelayMsEndingLEDsStatus( ) );
+    setLedsStatusColor( LED_YELLOW );
+    setDelayMsLEDsStatus( delay_ms );
+    while ( false == isDelayMsEndingLEDsStatus( ) );
+    setLedsStatusColor( LED_RED );
+    setDelayMsLEDsStatus( delay_ms );
+    while ( false == isDelayMsEndingLEDsStatus( ) );
+    setLedsStatusColor( LED_YELLOW );
+    setDelayMsLEDsStatus( delay_ms );
+    while ( false == isDelayMsEndingLEDsStatus( ) );
+    setLedsStatusColor( LED_BLUE );
+    setDelayMsLEDsStatus( delay_ms );
+    while ( false == isDelayMsEndingLEDsStatus( ) );
+    setLedsStatusColor( LED_GREEN );
+    setDelayMsLEDsStatus( delay_ms );
+    while ( false == isDelayMsEndingLEDsStatus( ) );
+
+    setLedsStatusColor( LEDS_OFF );
+}
 
 
 /*******************************************************************************

@@ -49,7 +49,6 @@
 
 #include <xc.h>
 #include "tmr1.h"
-#include "pin_manager.h"
 
 /**
   Section: Data Type Definitions
@@ -107,17 +106,10 @@ void __attribute__ ( ( interrupt, no_auto_psv ) ) _T1Interrupt (  )
     /* Check if the Timer Interrupt/Status is set */
 
     //***User Area Begin
-    static volatile unsigned int CountCallBack = 0;
 
-    // callback function - called every 10th pass
-    if (++CountCallBack >= TMR1_INTERRUPT_TICKER_FACTOR)
-    {
-        // ticker function call
+    // ticker function call;
+    // ticker is 1 -> Callback function gets called everytime this ISR executes
         TMR1_CallBack();
-
-        // reset ticker counter
-        CountCallBack = 0;
-    }
 
     //***User Area End
 
@@ -157,7 +149,6 @@ uint16_t TMR1_Counter16BitGet( void )
 void __attribute__ ((weak)) TMR1_CallBack(void)
 {
     // Add your custom callback code here
-    //LED_STATUS_G_Toggle();
 }
 
 void TMR1_Start( void )
