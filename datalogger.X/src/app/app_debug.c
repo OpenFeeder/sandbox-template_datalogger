@@ -272,6 +272,26 @@ void APP_SerialDebugTasks( void )
                 break;
                 /* -------------------------------------------------------------- */
 
+            case 't':
+            case 'T':
+            {
+                
+                struct tm current_time;
+                
+                RTCC_TimeGet(&current_time);
+    
+                printf( "%02u/%02u/20%02u %02u:%02u:%02u\n",
+                        current_time.tm_mday,
+                        current_time.tm_mon,
+                        current_time.tm_year,
+                        current_time.tm_hour,
+                        current_time.tm_min,
+                        current_time.tm_sec );
+    
+                break;
+            }
+                /* -------------------------------------------------------------- */
+    
             default:
                 putchar( data_from_uart1 ); /* echo RX data if doesn't match */
                 break;

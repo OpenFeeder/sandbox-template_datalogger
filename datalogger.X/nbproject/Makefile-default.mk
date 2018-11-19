@@ -57,17 +57,17 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Source Files Quoted if spaced
-SOURCEFILES_QUOTED_IF_SPACED=src/app/app_debug.c src/app/app_usb.c src/driver/led_status.c src/driver/dht_sensor.c src/framework/fileio/fileio.c src/framework/usb/usb_config.c src/framework/usb/usb_hal_pic24.c src/framework/usb/usb_host.c src/framework/usb/usb_host_msd.c src/framework/usb/usb_host_msd_scsi.c mcc_generated_files/system.c mcc_generated_files/clock.c mcc_generated_files/traps.c mcc_generated_files/interrupt_manager.c mcc_generated_files/mcc.c mcc_generated_files/pin_manager.c mcc_generated_files/tmr1.c mcc_generated_files/uart1.c main.c src/driver/delay.c src/app/app_timers_callback.c src/app/app_host_msd_data_logger.c
+SOURCEFILES_QUOTED_IF_SPACED=src/app/app_debug.c src/app/app_usb.c src/app/app_timers_callback.c src/app/app_host_msd_data_logger.c src/driver/led_status.c src/driver/dht_sensor.c src/driver/delay.c src/framework/fileio/fileio.c src/framework/usb/usb_config.c src/framework/usb/usb_hal_pic24.c src/framework/usb/usb_host.c src/framework/usb/usb_host_msd.c src/framework/usb/usb_host_msd_scsi.c mcc_generated_files/system.c mcc_generated_files/clock.c mcc_generated_files/traps.c mcc_generated_files/interrupt_manager.c mcc_generated_files/mcc.c mcc_generated_files/pin_manager.c mcc_generated_files/tmr1.c mcc_generated_files/uart1.c main.c mcc_generated_files/rtcc.c
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/src/app/app_debug.o ${OBJECTDIR}/src/app/app_usb.o ${OBJECTDIR}/src/driver/led_status.o ${OBJECTDIR}/src/driver/dht_sensor.o ${OBJECTDIR}/src/framework/fileio/fileio.o ${OBJECTDIR}/src/framework/usb/usb_config.o ${OBJECTDIR}/src/framework/usb/usb_hal_pic24.o ${OBJECTDIR}/src/framework/usb/usb_host.o ${OBJECTDIR}/src/framework/usb/usb_host_msd.o ${OBJECTDIR}/src/framework/usb/usb_host_msd_scsi.o ${OBJECTDIR}/mcc_generated_files/system.o ${OBJECTDIR}/mcc_generated_files/clock.o ${OBJECTDIR}/mcc_generated_files/traps.o ${OBJECTDIR}/mcc_generated_files/interrupt_manager.o ${OBJECTDIR}/mcc_generated_files/mcc.o ${OBJECTDIR}/mcc_generated_files/pin_manager.o ${OBJECTDIR}/mcc_generated_files/tmr1.o ${OBJECTDIR}/mcc_generated_files/uart1.o ${OBJECTDIR}/main.o ${OBJECTDIR}/src/driver/delay.o ${OBJECTDIR}/src/app/app_timers_callback.o ${OBJECTDIR}/src/app/app_host_msd_data_logger.o
-POSSIBLE_DEPFILES=${OBJECTDIR}/src/app/app_debug.o.d ${OBJECTDIR}/src/app/app_usb.o.d ${OBJECTDIR}/src/driver/led_status.o.d ${OBJECTDIR}/src/driver/dht_sensor.o.d ${OBJECTDIR}/src/framework/fileio/fileio.o.d ${OBJECTDIR}/src/framework/usb/usb_config.o.d ${OBJECTDIR}/src/framework/usb/usb_hal_pic24.o.d ${OBJECTDIR}/src/framework/usb/usb_host.o.d ${OBJECTDIR}/src/framework/usb/usb_host_msd.o.d ${OBJECTDIR}/src/framework/usb/usb_host_msd_scsi.o.d ${OBJECTDIR}/mcc_generated_files/system.o.d ${OBJECTDIR}/mcc_generated_files/clock.o.d ${OBJECTDIR}/mcc_generated_files/traps.o.d ${OBJECTDIR}/mcc_generated_files/interrupt_manager.o.d ${OBJECTDIR}/mcc_generated_files/mcc.o.d ${OBJECTDIR}/mcc_generated_files/pin_manager.o.d ${OBJECTDIR}/mcc_generated_files/tmr1.o.d ${OBJECTDIR}/mcc_generated_files/uart1.o.d ${OBJECTDIR}/main.o.d ${OBJECTDIR}/src/driver/delay.o.d ${OBJECTDIR}/src/app/app_timers_callback.o.d ${OBJECTDIR}/src/app/app_host_msd_data_logger.o.d
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/src/app/app_debug.o ${OBJECTDIR}/src/app/app_usb.o ${OBJECTDIR}/src/app/app_timers_callback.o ${OBJECTDIR}/src/app/app_host_msd_data_logger.o ${OBJECTDIR}/src/driver/led_status.o ${OBJECTDIR}/src/driver/dht_sensor.o ${OBJECTDIR}/src/driver/delay.o ${OBJECTDIR}/src/framework/fileio/fileio.o ${OBJECTDIR}/src/framework/usb/usb_config.o ${OBJECTDIR}/src/framework/usb/usb_hal_pic24.o ${OBJECTDIR}/src/framework/usb/usb_host.o ${OBJECTDIR}/src/framework/usb/usb_host_msd.o ${OBJECTDIR}/src/framework/usb/usb_host_msd_scsi.o ${OBJECTDIR}/mcc_generated_files/system.o ${OBJECTDIR}/mcc_generated_files/clock.o ${OBJECTDIR}/mcc_generated_files/traps.o ${OBJECTDIR}/mcc_generated_files/interrupt_manager.o ${OBJECTDIR}/mcc_generated_files/mcc.o ${OBJECTDIR}/mcc_generated_files/pin_manager.o ${OBJECTDIR}/mcc_generated_files/tmr1.o ${OBJECTDIR}/mcc_generated_files/uart1.o ${OBJECTDIR}/main.o ${OBJECTDIR}/mcc_generated_files/rtcc.o
+POSSIBLE_DEPFILES=${OBJECTDIR}/src/app/app_debug.o.d ${OBJECTDIR}/src/app/app_usb.o.d ${OBJECTDIR}/src/app/app_timers_callback.o.d ${OBJECTDIR}/src/app/app_host_msd_data_logger.o.d ${OBJECTDIR}/src/driver/led_status.o.d ${OBJECTDIR}/src/driver/dht_sensor.o.d ${OBJECTDIR}/src/driver/delay.o.d ${OBJECTDIR}/src/framework/fileio/fileio.o.d ${OBJECTDIR}/src/framework/usb/usb_config.o.d ${OBJECTDIR}/src/framework/usb/usb_hal_pic24.o.d ${OBJECTDIR}/src/framework/usb/usb_host.o.d ${OBJECTDIR}/src/framework/usb/usb_host_msd.o.d ${OBJECTDIR}/src/framework/usb/usb_host_msd_scsi.o.d ${OBJECTDIR}/mcc_generated_files/system.o.d ${OBJECTDIR}/mcc_generated_files/clock.o.d ${OBJECTDIR}/mcc_generated_files/traps.o.d ${OBJECTDIR}/mcc_generated_files/interrupt_manager.o.d ${OBJECTDIR}/mcc_generated_files/mcc.o.d ${OBJECTDIR}/mcc_generated_files/pin_manager.o.d ${OBJECTDIR}/mcc_generated_files/tmr1.o.d ${OBJECTDIR}/mcc_generated_files/uart1.o.d ${OBJECTDIR}/main.o.d ${OBJECTDIR}/mcc_generated_files/rtcc.o.d
 
 # Object Files
-OBJECTFILES=${OBJECTDIR}/src/app/app_debug.o ${OBJECTDIR}/src/app/app_usb.o ${OBJECTDIR}/src/driver/led_status.o ${OBJECTDIR}/src/driver/dht_sensor.o ${OBJECTDIR}/src/framework/fileio/fileio.o ${OBJECTDIR}/src/framework/usb/usb_config.o ${OBJECTDIR}/src/framework/usb/usb_hal_pic24.o ${OBJECTDIR}/src/framework/usb/usb_host.o ${OBJECTDIR}/src/framework/usb/usb_host_msd.o ${OBJECTDIR}/src/framework/usb/usb_host_msd_scsi.o ${OBJECTDIR}/mcc_generated_files/system.o ${OBJECTDIR}/mcc_generated_files/clock.o ${OBJECTDIR}/mcc_generated_files/traps.o ${OBJECTDIR}/mcc_generated_files/interrupt_manager.o ${OBJECTDIR}/mcc_generated_files/mcc.o ${OBJECTDIR}/mcc_generated_files/pin_manager.o ${OBJECTDIR}/mcc_generated_files/tmr1.o ${OBJECTDIR}/mcc_generated_files/uart1.o ${OBJECTDIR}/main.o ${OBJECTDIR}/src/driver/delay.o ${OBJECTDIR}/src/app/app_timers_callback.o ${OBJECTDIR}/src/app/app_host_msd_data_logger.o
+OBJECTFILES=${OBJECTDIR}/src/app/app_debug.o ${OBJECTDIR}/src/app/app_usb.o ${OBJECTDIR}/src/app/app_timers_callback.o ${OBJECTDIR}/src/app/app_host_msd_data_logger.o ${OBJECTDIR}/src/driver/led_status.o ${OBJECTDIR}/src/driver/dht_sensor.o ${OBJECTDIR}/src/driver/delay.o ${OBJECTDIR}/src/framework/fileio/fileio.o ${OBJECTDIR}/src/framework/usb/usb_config.o ${OBJECTDIR}/src/framework/usb/usb_hal_pic24.o ${OBJECTDIR}/src/framework/usb/usb_host.o ${OBJECTDIR}/src/framework/usb/usb_host_msd.o ${OBJECTDIR}/src/framework/usb/usb_host_msd_scsi.o ${OBJECTDIR}/mcc_generated_files/system.o ${OBJECTDIR}/mcc_generated_files/clock.o ${OBJECTDIR}/mcc_generated_files/traps.o ${OBJECTDIR}/mcc_generated_files/interrupt_manager.o ${OBJECTDIR}/mcc_generated_files/mcc.o ${OBJECTDIR}/mcc_generated_files/pin_manager.o ${OBJECTDIR}/mcc_generated_files/tmr1.o ${OBJECTDIR}/mcc_generated_files/uart1.o ${OBJECTDIR}/main.o ${OBJECTDIR}/mcc_generated_files/rtcc.o
 
 # Source Files
-SOURCEFILES=src/app/app_debug.c src/app/app_usb.c src/driver/led_status.c src/driver/dht_sensor.c src/framework/fileio/fileio.c src/framework/usb/usb_config.c src/framework/usb/usb_hal_pic24.c src/framework/usb/usb_host.c src/framework/usb/usb_host_msd.c src/framework/usb/usb_host_msd_scsi.c mcc_generated_files/system.c mcc_generated_files/clock.c mcc_generated_files/traps.c mcc_generated_files/interrupt_manager.c mcc_generated_files/mcc.c mcc_generated_files/pin_manager.c mcc_generated_files/tmr1.c mcc_generated_files/uart1.c main.c src/driver/delay.c src/app/app_timers_callback.c src/app/app_host_msd_data_logger.c
+SOURCEFILES=src/app/app_debug.c src/app/app_usb.c src/app/app_timers_callback.c src/app/app_host_msd_data_logger.c src/driver/led_status.c src/driver/dht_sensor.c src/driver/delay.c src/framework/fileio/fileio.c src/framework/usb/usb_config.c src/framework/usb/usb_hal_pic24.c src/framework/usb/usb_host.c src/framework/usb/usb_host_msd.c src/framework/usb/usb_host_msd_scsi.c mcc_generated_files/system.c mcc_generated_files/clock.c mcc_generated_files/traps.c mcc_generated_files/interrupt_manager.c mcc_generated_files/mcc.c mcc_generated_files/pin_manager.c mcc_generated_files/tmr1.c mcc_generated_files/uart1.c main.c mcc_generated_files/rtcc.c
 
 
 CFLAGS=
@@ -108,6 +108,20 @@ ${OBJECTDIR}/src/app/app_usb.o: src/app/app_usb.c  nbproject/Makefile-${CND_CONF
 	${MP_CC} $(MP_EXTRA_CC_PRE)  src/app/app_usb.c  -o ${OBJECTDIR}/src/app/app_usb.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/src/app/app_usb.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_ICD3=1  -mno-eds-warn  -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off  
 	@${FIXDEPS} "${OBJECTDIR}/src/app/app_usb.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
 	
+${OBJECTDIR}/src/app/app_timers_callback.o: src/app/app_timers_callback.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/src/app" 
+	@${RM} ${OBJECTDIR}/src/app/app_timers_callback.o.d 
+	@${RM} ${OBJECTDIR}/src/app/app_timers_callback.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  src/app/app_timers_callback.c  -o ${OBJECTDIR}/src/app/app_timers_callback.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/src/app/app_timers_callback.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_ICD3=1  -mno-eds-warn  -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off  
+	@${FIXDEPS} "${OBJECTDIR}/src/app/app_timers_callback.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
+	
+${OBJECTDIR}/src/app/app_host_msd_data_logger.o: src/app/app_host_msd_data_logger.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/src/app" 
+	@${RM} ${OBJECTDIR}/src/app/app_host_msd_data_logger.o.d 
+	@${RM} ${OBJECTDIR}/src/app/app_host_msd_data_logger.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  src/app/app_host_msd_data_logger.c  -o ${OBJECTDIR}/src/app/app_host_msd_data_logger.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/src/app/app_host_msd_data_logger.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_ICD3=1  -mno-eds-warn  -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off  
+	@${FIXDEPS} "${OBJECTDIR}/src/app/app_host_msd_data_logger.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
+	
 ${OBJECTDIR}/src/driver/led_status.o: src/driver/led_status.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}/src/driver" 
 	@${RM} ${OBJECTDIR}/src/driver/led_status.o.d 
@@ -121,6 +135,13 @@ ${OBJECTDIR}/src/driver/dht_sensor.o: src/driver/dht_sensor.c  nbproject/Makefil
 	@${RM} ${OBJECTDIR}/src/driver/dht_sensor.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE)  src/driver/dht_sensor.c  -o ${OBJECTDIR}/src/driver/dht_sensor.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/src/driver/dht_sensor.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_ICD3=1  -mno-eds-warn  -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off  
 	@${FIXDEPS} "${OBJECTDIR}/src/driver/dht_sensor.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
+	
+${OBJECTDIR}/src/driver/delay.o: src/driver/delay.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/src/driver" 
+	@${RM} ${OBJECTDIR}/src/driver/delay.o.d 
+	@${RM} ${OBJECTDIR}/src/driver/delay.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  src/driver/delay.c  -o ${OBJECTDIR}/src/driver/delay.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/src/driver/delay.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_ICD3=1  -mno-eds-warn  -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off  
+	@${FIXDEPS} "${OBJECTDIR}/src/driver/delay.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
 	
 ${OBJECTDIR}/src/framework/fileio/fileio.o: src/framework/fileio/fileio.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}/src/framework/fileio" 
@@ -227,26 +248,12 @@ ${OBJECTDIR}/main.o: main.c  nbproject/Makefile-${CND_CONF}.mk
 	${MP_CC} $(MP_EXTRA_CC_PRE)  main.c  -o ${OBJECTDIR}/main.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/main.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_ICD3=1  -mno-eds-warn  -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off  
 	@${FIXDEPS} "${OBJECTDIR}/main.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
 	
-${OBJECTDIR}/src/driver/delay.o: src/driver/delay.c  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} "${OBJECTDIR}/src/driver" 
-	@${RM} ${OBJECTDIR}/src/driver/delay.o.d 
-	@${RM} ${OBJECTDIR}/src/driver/delay.o 
-	${MP_CC} $(MP_EXTRA_CC_PRE)  src/driver/delay.c  -o ${OBJECTDIR}/src/driver/delay.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/src/driver/delay.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_ICD3=1  -mno-eds-warn  -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off  
-	@${FIXDEPS} "${OBJECTDIR}/src/driver/delay.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
-	
-${OBJECTDIR}/src/app/app_timers_callback.o: src/app/app_timers_callback.c  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} "${OBJECTDIR}/src/app" 
-	@${RM} ${OBJECTDIR}/src/app/app_timers_callback.o.d 
-	@${RM} ${OBJECTDIR}/src/app/app_timers_callback.o 
-	${MP_CC} $(MP_EXTRA_CC_PRE)  src/app/app_timers_callback.c  -o ${OBJECTDIR}/src/app/app_timers_callback.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/src/app/app_timers_callback.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_ICD3=1  -mno-eds-warn  -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off  
-	@${FIXDEPS} "${OBJECTDIR}/src/app/app_timers_callback.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
-	
-${OBJECTDIR}/src/app/app_host_msd_data_logger.o: src/app/app_host_msd_data_logger.c  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} "${OBJECTDIR}/src/app" 
-	@${RM} ${OBJECTDIR}/src/app/app_host_msd_data_logger.o.d 
-	@${RM} ${OBJECTDIR}/src/app/app_host_msd_data_logger.o 
-	${MP_CC} $(MP_EXTRA_CC_PRE)  src/app/app_host_msd_data_logger.c  -o ${OBJECTDIR}/src/app/app_host_msd_data_logger.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/src/app/app_host_msd_data_logger.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_ICD3=1  -mno-eds-warn  -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off  
-	@${FIXDEPS} "${OBJECTDIR}/src/app/app_host_msd_data_logger.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
+${OBJECTDIR}/mcc_generated_files/rtcc.o: mcc_generated_files/rtcc.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/mcc_generated_files" 
+	@${RM} ${OBJECTDIR}/mcc_generated_files/rtcc.o.d 
+	@${RM} ${OBJECTDIR}/mcc_generated_files/rtcc.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  mcc_generated_files/rtcc.c  -o ${OBJECTDIR}/mcc_generated_files/rtcc.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/mcc_generated_files/rtcc.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_ICD3=1  -mno-eds-warn  -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off  
+	@${FIXDEPS} "${OBJECTDIR}/mcc_generated_files/rtcc.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
 	
 else
 ${OBJECTDIR}/src/app/app_debug.o: src/app/app_debug.c  nbproject/Makefile-${CND_CONF}.mk
@@ -263,6 +270,20 @@ ${OBJECTDIR}/src/app/app_usb.o: src/app/app_usb.c  nbproject/Makefile-${CND_CONF
 	${MP_CC} $(MP_EXTRA_CC_PRE)  src/app/app_usb.c  -o ${OBJECTDIR}/src/app/app_usb.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/src/app/app_usb.o.d"      -mno-eds-warn  -g -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off  
 	@${FIXDEPS} "${OBJECTDIR}/src/app/app_usb.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
 	
+${OBJECTDIR}/src/app/app_timers_callback.o: src/app/app_timers_callback.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/src/app" 
+	@${RM} ${OBJECTDIR}/src/app/app_timers_callback.o.d 
+	@${RM} ${OBJECTDIR}/src/app/app_timers_callback.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  src/app/app_timers_callback.c  -o ${OBJECTDIR}/src/app/app_timers_callback.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/src/app/app_timers_callback.o.d"      -mno-eds-warn  -g -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off  
+	@${FIXDEPS} "${OBJECTDIR}/src/app/app_timers_callback.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
+	
+${OBJECTDIR}/src/app/app_host_msd_data_logger.o: src/app/app_host_msd_data_logger.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/src/app" 
+	@${RM} ${OBJECTDIR}/src/app/app_host_msd_data_logger.o.d 
+	@${RM} ${OBJECTDIR}/src/app/app_host_msd_data_logger.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  src/app/app_host_msd_data_logger.c  -o ${OBJECTDIR}/src/app/app_host_msd_data_logger.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/src/app/app_host_msd_data_logger.o.d"      -mno-eds-warn  -g -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off  
+	@${FIXDEPS} "${OBJECTDIR}/src/app/app_host_msd_data_logger.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
+	
 ${OBJECTDIR}/src/driver/led_status.o: src/driver/led_status.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}/src/driver" 
 	@${RM} ${OBJECTDIR}/src/driver/led_status.o.d 
@@ -276,6 +297,13 @@ ${OBJECTDIR}/src/driver/dht_sensor.o: src/driver/dht_sensor.c  nbproject/Makefil
 	@${RM} ${OBJECTDIR}/src/driver/dht_sensor.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE)  src/driver/dht_sensor.c  -o ${OBJECTDIR}/src/driver/dht_sensor.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/src/driver/dht_sensor.o.d"      -mno-eds-warn  -g -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off  
 	@${FIXDEPS} "${OBJECTDIR}/src/driver/dht_sensor.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
+	
+${OBJECTDIR}/src/driver/delay.o: src/driver/delay.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/src/driver" 
+	@${RM} ${OBJECTDIR}/src/driver/delay.o.d 
+	@${RM} ${OBJECTDIR}/src/driver/delay.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  src/driver/delay.c  -o ${OBJECTDIR}/src/driver/delay.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/src/driver/delay.o.d"      -mno-eds-warn  -g -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off  
+	@${FIXDEPS} "${OBJECTDIR}/src/driver/delay.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
 	
 ${OBJECTDIR}/src/framework/fileio/fileio.o: src/framework/fileio/fileio.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}/src/framework/fileio" 
@@ -382,26 +410,12 @@ ${OBJECTDIR}/main.o: main.c  nbproject/Makefile-${CND_CONF}.mk
 	${MP_CC} $(MP_EXTRA_CC_PRE)  main.c  -o ${OBJECTDIR}/main.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/main.o.d"      -mno-eds-warn  -g -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off  
 	@${FIXDEPS} "${OBJECTDIR}/main.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
 	
-${OBJECTDIR}/src/driver/delay.o: src/driver/delay.c  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} "${OBJECTDIR}/src/driver" 
-	@${RM} ${OBJECTDIR}/src/driver/delay.o.d 
-	@${RM} ${OBJECTDIR}/src/driver/delay.o 
-	${MP_CC} $(MP_EXTRA_CC_PRE)  src/driver/delay.c  -o ${OBJECTDIR}/src/driver/delay.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/src/driver/delay.o.d"      -mno-eds-warn  -g -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off  
-	@${FIXDEPS} "${OBJECTDIR}/src/driver/delay.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
-	
-${OBJECTDIR}/src/app/app_timers_callback.o: src/app/app_timers_callback.c  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} "${OBJECTDIR}/src/app" 
-	@${RM} ${OBJECTDIR}/src/app/app_timers_callback.o.d 
-	@${RM} ${OBJECTDIR}/src/app/app_timers_callback.o 
-	${MP_CC} $(MP_EXTRA_CC_PRE)  src/app/app_timers_callback.c  -o ${OBJECTDIR}/src/app/app_timers_callback.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/src/app/app_timers_callback.o.d"      -mno-eds-warn  -g -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off  
-	@${FIXDEPS} "${OBJECTDIR}/src/app/app_timers_callback.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
-	
-${OBJECTDIR}/src/app/app_host_msd_data_logger.o: src/app/app_host_msd_data_logger.c  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} "${OBJECTDIR}/src/app" 
-	@${RM} ${OBJECTDIR}/src/app/app_host_msd_data_logger.o.d 
-	@${RM} ${OBJECTDIR}/src/app/app_host_msd_data_logger.o 
-	${MP_CC} $(MP_EXTRA_CC_PRE)  src/app/app_host_msd_data_logger.c  -o ${OBJECTDIR}/src/app/app_host_msd_data_logger.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/src/app/app_host_msd_data_logger.o.d"      -mno-eds-warn  -g -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off  
-	@${FIXDEPS} "${OBJECTDIR}/src/app/app_host_msd_data_logger.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
+${OBJECTDIR}/mcc_generated_files/rtcc.o: mcc_generated_files/rtcc.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/mcc_generated_files" 
+	@${RM} ${OBJECTDIR}/mcc_generated_files/rtcc.o.d 
+	@${RM} ${OBJECTDIR}/mcc_generated_files/rtcc.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  mcc_generated_files/rtcc.c  -o ${OBJECTDIR}/mcc_generated_files/rtcc.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/mcc_generated_files/rtcc.o.d"      -mno-eds-warn  -g -omf=elf -DXPRJ_default=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off  
+	@${FIXDEPS} "${OBJECTDIR}/mcc_generated_files/rtcc.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
 	
 endif
 

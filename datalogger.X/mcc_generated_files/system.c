@@ -50,12 +50,14 @@
 #include "tmr1.h"
 #include "interrupt_manager.h"
 #include "traps.h"
+#include "rtcc.h"
 
 void SYSTEM_Initialize(void)
 {
     PIN_MANAGER_Initialize();
     CLOCK_Initialize();
     INTERRUPT_Initialize();
+    RTCC_Initialize();
     UART1_Initialize();
     TMR1_Initialize();
 }

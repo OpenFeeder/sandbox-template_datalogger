@@ -85,6 +85,8 @@ void powerUsbDevice(void);
  */
 int main( void )
 {
+    struct tm current_time;
+    
     // initialize the device
     SYSTEM_Initialize( );
 
@@ -100,6 +102,17 @@ int main( void )
     /* Status LED blinks */
     checkLedsStatus();
 
+    /* Get current date and time */
+    RTCC_TimeGet(&current_time);
+    
+    printf( "%02u/%02u/20%02u %02u:%02u:%02u\n",
+            current_time.tm_mday,
+            current_time.tm_mon,
+            current_time.tm_year,
+            current_time.tm_hour,
+            current_time.tm_min,
+            current_time.tm_sec );
+    
     /* Read DHT22 sensor */
     //INTERRUPT_GlobalInterruptDisable( ); // Disable the Global Interrupts
 //    if ( true == DHT22_Detect( ) )
@@ -138,7 +151,7 @@ int main( void )
         /* Maintain Device Drivers. */
         USBTasks( );
         
-        APP_HostMSDDataLoggerTasks();
+//        APP_HostMSDDataLoggerTasks();
         
         APP_SerialDebugTasks( );
         

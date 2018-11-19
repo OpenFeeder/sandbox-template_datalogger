@@ -54,6 +54,7 @@
 #include "tmr1.h"
 #include "interrupt_manager.h"
 #include "traps.h"
+#include "rtcc.h"
 
 #define _XTAL_FREQ  16000000UL
 
