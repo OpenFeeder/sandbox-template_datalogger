@@ -11,23 +11,28 @@
 #include "../framework/usb/usb.h"
 #include "../../mcc_generated_files/uart1.h"
 #include "../driver/led_status.h"
+#include "../app/app_host_msd_data_logger.h"
+#include "../app/app_alarm.h"
 
-//void displayBootMessage( void )
-//{
-////    printf( "\n\n================ OpenFeeder ================\n\t" );
-////    displayFirmwareVersion( );
-////    printf( "\t" );
-////    displayBuildDateTime( );
-////    printf( "\tFor board v3.0\n" );
-////    printf( "============================================\n\t" );
-////    displayUniqueDeviceId( );
-////    printf( "============================================\n" );
-////    printf( "\tWeb page: https://github.com/OpenFeeder\n" );
-////    printf( "\tMail: contact.openfeeder@gmail.com\n" );
-////    printf( "============================================\n" );
-////    printf( "\tType [?] key to display debug options.\n" );
-////    printf( "============================================\n\n" );
-//}
+uint8_t g_deviceAddress;
+
+void displayBootMessage( void )
+{
+    printf( "\n\n================ OpenFeeder ================\n\t" );
+    printf("\t Datalogger demo\n");
+//    displayFirmwareVersion( );
+//    printf( "\t" );
+//    displayBuildDateTime( );
+//    printf( "\tFor board v3.0\n" );
+//    printf( "============================================\n\t" );
+//    displayUniqueDeviceId( );
+    printf( "============================================\n" );
+    printf( "\tWeb page: https://github.com/OpenFeeder\n" );
+    printf( "\tMail: contact.openfeeder@gmail.com\n" );
+    printf( "============================================\n" );
+    printf( "\tType [?] key to display debug options.\n" );
+    printf( "============================================\n\n" );
+}
 
 
 
@@ -38,6 +43,8 @@ void APP_SerialDebugTasks( void )
 //    bool flag;
 //    FILEIO_DRIVE_PROPERTIES drive_properties;
 //
+    static char ch[200];
+    
     if ( UART1_TRANSFER_STATUS_RX_DATA_PRESENT & UART1_TransferStatusGet( ) )
     {
         /* If there is at least one byte of data has been received. */
@@ -45,11 +52,17 @@ void APP_SerialDebugTasks( void )
 
         switch ( data_from_uart1 )
         {
-//            case ',':
-//            case '?':
-//                /* Interface firmware terminal (Debug) */
-//                printf( "Key mapping:\n" );
-//
+            case ',':
+            case '?':
+                /* Interface firmware terminal (Debug) */
+                printf( "Key mapping:\n" );
+                
+                printf( " a or A: display alarm interval\n" );                
+                printf( " p or P: pause the datalogger\n" );
+                printf( " r or R: run the datalogger\n" );
+                printf( " q or Q: check status LEDs\n" );
+                printf( " t or T: get current time\n" );
+                
 //                printf( " f or F: flush data on USB device\n" );
 //                //                printf( "> g or G: NOT USED\n" );
 //                printf( " h or H: firmware & hardware information\n" );
@@ -61,8 +74,50 @@ void APP_SerialDebugTasks( void )
 //                printf( "   - x or X: export files\n" );
 //                printf( " k or K: USB device properties\n" );
 //                printf( " q or Q: check status LEDs\n" );
-//                break;
-//
+                break;
+
+            case 'a':
+            case 'A':
+            {
+               
+                printf("%d\n", RTCCON1Hbits.AMASK);
+                
+                switch ( RTCCON1Hbits.AMASK )
+                    case ONCE_A_YEAR:
+                        printf("Once a year\n");
+                        break;
+                    case ONCE_A_MONTH:
+                        printf("Once a month\n");
+                        break;
+                    case ONCE_A_WEEK:
+                        printf("Once a week\n");
+                        break;
+                    case EVERY_DAY:
+                        printf("Once a day\n");
+                        break;
+                    case EVERY_HOUR:
+                        printf("Every hour\n");
+                        break;
+                    case EVERY_10_MINUTES:
+                        printf("Every 10 minutes\n");
+                        break;
+                    case EVERY_MINUTE:
+                        printf("Every minute\n");
+                        break;
+                    case EVERY_10_SECONDS:
+                        printf("Every 10 seconds\n");
+                        break;
+                    case EVERY_SECOND:
+                        printf("Every second\n");
+                        break;
+                    case EVERY_HALF_SECOND:
+                        printf("Every half second\n");
+                        break;
+                        
+                break;
+            }                   
+                /* -------------------------------------------------------------- */
+                
 //            case 'f':
 //            case 'F':
 //
@@ -264,6 +319,88 @@ void APP_SerialDebugTasks( void )
 //                break;
 //                /* -------------------------------------------------------------- */
 //
+            case 'L':
+            case 'l':
+            {
+                FILEIO_SEARCH_RECORD searchRecord;
+                int8_t result;
+                // Declare a FILEIO_DRIVE_CONFIG structure to describe which functions the File I/O library will use to communicate with the media
+                const FILEIO_DRIVE_CONFIG gUSBDrive =
+                {
+                    (FILEIO_DRIVER_IOInitialize)NULL,                     // Function to initialize the I/O pins used by the driver.
+                    (FILEIO_DRIVER_MediaDetect)USBHostMSDSCSIMediaDetect,                   // Function to detect that the media is inserted.
+                    (FILEIO_DRIVER_MediaInitialize)USBHostMSDSCSIMediaInitialize,           // Function to initialize the media.
+                    (FILEIO_DRIVER_MediaDeinitialize)USBHostMSDSCSIMediaDeinitialize,              // Function to de-initialize the media.
+                    (FILEIO_DRIVER_SectorRead)USBHostMSDSCSISectorRead,                     // Function to read a sector from the media.
+                    (FILEIO_DRIVER_SectorWrite)USBHostMSDSCSISectorWrite,                   // Function to write a sector to the media.
+                    (FILEIO_DRIVER_WriteProtectStateGet)USBHostMSDSCSIWriteProtectState,    // Function to determine if the media is write-protected.
+                };
+
+                setLedsStatusColor( LED_USB_ACCESS );
+
+                if ( FILEIO_ERROR_NONE != FILEIO_DriveMount ('A', &gUSBDrive, &g_deviceAddress) )
+                {
+                    printf("Unable to mount drive");
+                    return;
+                    
+                }
+
+                setLedsStatusColor( LED_YELLOW );
+                
+                result = FILEIO_Find( "*.*", FILEIO_ATTRIBUTE_ARCHIVE, &searchRecord, true );
+
+                setLedsStatusColor( LED_RED );
+                
+                if ( FILEIO_RESULT_SUCCESS == result )
+                {
+
+                    sprintf( ch, "\t%s", searchRecord.shortFileName );
+                    daves_putU1( ch, strlen( ch ) );
+                    sprintf( ch, " (%ld bytes)\r\n", searchRecord.fileSize );
+                    daves_putU1( ch, strlen( ch ) );
+
+                    while ( FILEIO_RESULT_SUCCESS == FILEIO_Find( "*.*", FILEIO_ATTRIBUTE_ARCHIVE, &searchRecord, false ) )
+                    {
+
+                        sprintf( ch, "\t%s", searchRecord.shortFileName );
+                        daves_putU1( ch, strlen( ch ) );
+                        sprintf( ch, " (%ld bytes)\r\n", searchRecord.fileSize );
+                        daves_putU1( ch, strlen( ch ) );
+
+                    }
+
+                }
+                else
+                {
+
+//                    displayFileErr( ( char * ) searchRecord.shortFileName, false );
+
+                }
+
+                if ( FILEIO_ERROR_NONE != FILEIO_DriveUnmount ('A') )
+                {
+                    printf("Unable to unmount drive");
+                    return;
+                    
+                }
+
+                setLedsStatusColor( LEDS_OFF );
+    
+                break;
+            }
+                
+
+                
+            case 'p':
+            case 'P':
+                
+                // Disable RTCC alarm
+                RTCCON1Hbits.ALRMEN = 0;
+                printf("Datalogger is paused\n");
+
+                break;
+                /* -------------------------------------------------------------- */
+                
             case 'q':
             case 'Q':
                 /* Check status LEDs */
@@ -272,6 +409,16 @@ void APP_SerialDebugTasks( void )
                 break;
                 /* -------------------------------------------------------------- */
 
+            case 'r':
+            case 'R':
+                
+                // Enable RTCC alarm
+                RTCCON1Hbits.ALRMEN = 1;
+                printf("Datalogger is runnning\n");
+
+                break;
+                /* -------------------------------------------------------------- */
+                
             case 't':
             case 'T':
             {
@@ -407,6 +554,35 @@ void printUSBHostDeviceStatus( void )
 //    }
 } /* End of printUSBHostDeviceStatus( ) */
 
+void daves_putU1( const char *buf, unsigned int num_to_transmit )
+{
+    /* https://www.microchip.com/forums/m1063767.aspx */
+    /* https://www.microchip.com/forums/FindPost/1063897 */
+    UART1_TRANSFER_STATUS status;
+    unsigned int numBytes = 0;
+
+    while ( numBytes < num_to_transmit )
+    {
+        status = UART1_TransferStatusGet( );
+        if ( status & UART1_TRANSFER_STATUS_TX_EMPTY )
+        {
+            numBytes += UART1_WriteBuffer( ( uint8_t * ) ( buf + numBytes ), num_to_transmit - numBytes );
+            if ( numBytes < num_to_transmit )
+            {
+                continue;
+            }
+            else
+            {
+                break;
+            }
+        }
+        else
+        {
+            continue;
+        }
+    }
+
+} // End of daves_putU1
 
 /*******************************************************************************
  End of File

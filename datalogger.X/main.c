@@ -48,24 +48,23 @@
 #include "mcc_generated_files/mcc.h"
 
 //#define _XTAL_FREQ 8000000  // for XC8...
-#define FCY 8000000UL/2 // instruction cycle freq for XC16 - FIXME : Test and measure blink with __delay_ms( 10 ) to find right FCY value 
+//#define FCY 8000000UL/2 // instruction cycle freq for XC16 - FIXME : Test and measure blink with __delay_ms( 10 ) to find right FCY value 
 #include <libpic30.h>
 
 #include "mcc_generated_files/system.h"
 #include "mcc_generated_files/tmr1.h"
 #include "mcc_generated_files/uart1.h"
-
 #include "src/driver/led_status.h"
 #include "src/driver/dht_sensor.h"
-
 #include "src/app/app_debug.h"
-
 #include "src/driver/../framework/usb/usb.h"
 #include "src/driver/../framework/usb/usb_host_msd.h"
-
 #include "src/app/app_host_msd_data_logger.h"
+#include "src/app/app_alarm.h" 
+#include "src/app/app_measure.h" 
 
-void powerUsbDevice(void);
+bool powerOnUsbDevice(void);
+bool powerOffUsbDevice(void);
 
 //int main( void )
 //{
@@ -85,33 +84,24 @@ void powerUsbDevice(void);
  */
 int main( void )
 {
-    struct tm current_time;
+    bool go_to_deep_sleep = true;
+    bool is_measure_get = false;
+    bool is_usb_powered = false;
+    bool task_complete = false;
+    int16_t measure = 0;
     
-    // initialize the device
+    /* Initialize the device */
     SYSTEM_Initialize( );
 
+    /* Initialize the file i/o process */
     FILEIO_Initialize();
-    
-    __delay_ms( 1 );
-    printf( "Demo template datalogger\nread DHT22 sensor.\n\r" );
-    while ( !( UART1_StatusGet( ) & UART1_TX_COMPLETE ) )
-    {
-        // Wait for the tranmission to complete
-    }
+    FILEIO_RegisterTimestampGet( GetTimestamp );
+
+    /* Display boot message */
+    displayBootMessage();
 
     /* Status LED blinks */
-    checkLedsStatus();
-
-    /* Get current date and time */
-    RTCC_TimeGet(&current_time);
-    
-    printf( "%02u/%02u/20%02u %02u:%02u:%02u\n",
-            current_time.tm_mday,
-            current_time.tm_mon,
-            current_time.tm_year,
-            current_time.tm_hour,
-            current_time.tm_min,
-            current_time.tm_sec );
+    checkLedsStatus();           
     
     /* Read DHT22 sensor */
     //INTERRUPT_GlobalInterruptDisable( ); // Disable the Global Interrupts
@@ -136,36 +126,120 @@ int main( void )
     if ( !USBHostInit( 0 ) )
     {
         printf( "\nFailure to initialize USB Host API!\n" );
+        printf( "HOST: Cannot allocate space for endpoint 0.\n" );
     }
-    
-    printf( "Done\n" );
 
-    powerUsbDevice();
+    /* Stop timer 1 to avoid wake up during deep sleep */
+    TMR1_Stop();
     
-    APP_HostMSDDataLoggerInitialize();
-        
+    /* Set alarm mask*/
+    rtcc_set_alarm( EVERY_10_SECONDS );
+    
     while ( 1 )
     {
-        // Add your application code
+        /* Go to deep sleep if required */     
+        if ( true == go_to_deep_sleep )
+        {
+            /* Deep sleep */
+            printf("Deep sleep\n");
+            while ( !( UART1_StatusGet( ) & UART1_TX_COMPLETE ) )
+            {
+            // Wait for the tranmission to complete
+            }   
+
+            DSCONbits.DSEN = 1;
+            DSCONbits.DSEN = 1;
+
+            Sleep( ); 
+            
+            /* Wake up*/
+            printf("Wake up\n");
+            while ( !( UART1_StatusGet( ) & UART1_TX_COMPLETE ) )
+            {
+            // Wait for the tranmission to complete
+            } 
+            
+            /* Initialize data logger stack*/
+            APP_HostMSDDataLoggerInitialize();
+            
+            go_to_deep_sleep = false;
+            is_measure_get = false;
+            task_complete = false;
+            is_usb_powered = false;
+  
+        }
+
+        /* If no measure => get data from the sensor */
+        if ( false == is_measure_get )
+        {
+            /* Get measure from sensor */
+            is_measure_get = getMeasure(&measure); 
+        }
+ 
+        /* If measure available and USB power off => power on USB */
+        if ( true == is_measure_get && false == is_usb_powered)
+        {
+            /* Power on USB device */
+            is_usb_powered = powerOnUsbDevice();
+            
+            setLedsStatusColor( LED_GREEN );
+            
+            printf("\tPower on USB\n");
+            while ( !( UART1_StatusGet( ) & UART1_TX_COMPLETE ) )
+            {
+            // Wait for the tranmission to complete
+            }
+        }
+   
+        /* If measure available and USB power on => run the datalogger */
+        if ( true == is_measure_get && true == is_usb_powered)
+        {
+            /* Host data logger task*/
+            task_complete = APP_HostMSDDataLoggerTasks( measure );            
+        }
+
+        /* If the data logger compete its task => go to deep sleep mode */
+        if (true == task_complete )
+        {
+            /* Power off USB device */
+            powerOffUsbDevice();   
+            setLedsStatusColor( LEDS_OFF );
+            is_usb_powered = false;
+            go_to_deep_sleep = true;
+            printf("\tPower off USB\n");
+            while ( !( UART1_StatusGet( ) & UART1_TX_COMPLETE ) )
+            {
+            // Wait for the tranmission to complete
+            }
+        }
         
         /* Maintain Device Drivers. */
         USBTasks( );
         
-//        APP_HostMSDDataLoggerTasks();
-        
-        APP_SerialDebugTasks( );
+//        APP_SerialDebugTasks( );
         
     }
 
     return 1;
 }
 
-void powerUsbDevice() 
+bool powerOnUsbDevice() 
 {
     // Power on the voltage regulator U5 (MIC39101 - 5.0YM)
     _LATB13 = 1;
     _LATF0 = 0; // powered the USB connector
     _TRISF0 = 0;
+    
+    return true;
+}
+
+bool powerOffUsbDevice() 
+{
+    _TRISF0 = 1;
+    // Power off the voltage regulator U5 (MIC39101 - 5.0YM)
+    _LATB13 = 0;
+    
+    return true;
 }
 
 /**

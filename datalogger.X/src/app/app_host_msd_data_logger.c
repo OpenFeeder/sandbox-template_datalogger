@@ -20,6 +20,7 @@ please contact mla_licensing@microchip.com
 /** INCLUDES *******************************************************/
 
 #include "app_host_msd_data_logger.h"
+#include "../../mcc_generated_files/rtcc.h"
 
 static FILEIO_OBJECT myFile;
 
@@ -37,7 +38,6 @@ typedef enum
 
 static USB_HOST_MSD_DATA_LOGGER_DEMO_STATE demoState;
 static USB_HOST_MSD_DATA_LOGGER_DEMO_STATE previous_demoState;
-static uint8_t deviceAddress = 0;
 static volatile bool sampleRequested = false;
 //static char printBuffer[10];
 //static uint8_t blinkCount;
@@ -76,22 +76,9 @@ void APP_MountDrive(uint8_t address)
 {
     if (demoState == WAITING_FOR_ATTACH)
     {
-        deviceAddress = address;
+        g_deviceAddress = address;
         demoState = MOUNTING_DRIVE;
     }
-}
-
-void APP_HostMSDDataLoggerTickHandler(void)
-{
-    sampleRequested = true;
-
-//    blinkCount++;
-//
-//    if(blinkCount > 5)
-//    {
-//        LED_Toggle(LED_USB_HOST_MSD_DATA_LOGGER);
-//        blinkCount = 0;
-//    }
 }
 
 /*********************************************************************
@@ -107,14 +94,17 @@ void APP_HostMSDDataLoggerTickHandler(void)
 * Output: None
 *
 ********************************************************************/
-void APP_HostMSDDataLoggerTasks()
+bool APP_HostMSDDataLoggerTasks( int16_t measure )
 {
-    if(FILEIO_MediaDetect(&gUSBDrive, &deviceAddress) == false)
+    bool task_complete = false;
+    char buffer[100];
+    struct tm current_time;
+    
+    if(FILEIO_MediaDetect(&gUSBDrive, &g_deviceAddress) == false)
     {
         //The device has been removed.  Now we should wait for a new
         //  device to be attached.
         demoState = WAITING_FOR_ATTACH;
-        setLedsStatusColor( LED_YELLOW );
     }
     
     switch( demoState)
@@ -124,7 +114,7 @@ void APP_HostMSDDataLoggerTasks()
             if (previous_demoState != demoState)
             {
                 previous_demoState = demoState;
-                printf("WAITING_FOR_ATTACH\n");
+                printf("\t\tWAITING_FOR_ATTACH\n");
             }
             break;
 
@@ -134,17 +124,15 @@ void APP_HostMSDDataLoggerTasks()
             if (previous_demoState != demoState)
             {
                 previous_demoState = demoState;
-                printf("MOUNTING_DRIVE\n");
+                printf("\t\tMOUNTING_DRIVE\n");
             }
-            
-            setLedsStatusColor( LED_BLUE );
-            // Attempt to mount the drive described by gUSBDrive as drive 'A'
-            // The deviceAddress parameter describes the USB address of the device; it is initialized by the application in the 
-            // USB_ApplicationEventHandler function when a new device is detected.
-            if( FILEIO_DriveMount ('A', &gUSBDrive, &deviceAddress) == FILEIO_ERROR_NONE)
+
+            if( FILEIO_DriveMount ('A', &gUSBDrive, &g_deviceAddress) == FILEIO_ERROR_NONE)
             {
                 demoState = OPENING_FILE;
+                setLedsStatusColor( LED_PITTAG_ACCEPTED );
             }
+  
             break;
         }
 
@@ -153,23 +141,14 @@ void APP_HostMSDDataLoggerTasks()
             if (previous_demoState != demoState)
             {
                 previous_demoState = demoState;
-                printf("OPENING_FILE\n");
+                printf("\t\tOPENING_FILE\n");
             }
-            // Opening a file with the FILEIO_OPEN_WRITE option allows us to write to the file.
-            // Opening a file with the FILEIO_OPEN_CREATE file will create the file if it does not already exist.
-            // Opening a file with the FILEIO_OPEN_TRUNCATE file will truncate it to a 0-length file if it already exists.
-            if(FILEIO_Open(&myFile, "LOG.CSV", FILEIO_OPEN_WRITE | FILEIO_OPEN_CREATE | FILEIO_OPEN_TRUNCATE) == FILEIO_RESULT_SUCCESS)
+            
+            setLedsStatusColor( LEDS_TOO_MANY_SOFTWARE_RESET );            
+                
+            if(FILEIO_Open(&myFile, "LOG.CSV", FILEIO_OPEN_WRITE | FILEIO_OPEN_CREATE | FILEIO_OPEN_APPEND) == FILEIO_RESULT_SUCCESS)
             {
-                //Opening the file failed.  Since we can't write to the
-                //  device, abort the write attempt and wait for the device
-                //  to be removed.
                 demoState = WRITING_TO_FILE;
-
-//                blinkCount = 0;
-//                sampleRequested = false;
-//                TIMER_RequestTick(&APP_HostMSDDataLoggerTickHandler, 50);
-//                LED_On(LED_USB_HOST_MSD_DATA_LOGGER);
-//                ADC_ChannelEnable(ADC_USB_HOST_MSD_DATA_SOURCE);
                 break;
             }
             break;
@@ -179,27 +158,27 @@ void APP_HostMSDDataLoggerTasks()
             if (previous_demoState != demoState)
             {
                 previous_demoState = demoState;
-                printf("WRITING_TO_FILE\n");
+                printf("\t\tWRITING_TO_FILE\n");
             }
-//            if(sampleRequested == true)
-//            {
-//                uint16_t  adcResult;
-//                int charCount;
-//
-//                sampleRequested = false;
-//                
-//                adcResult = ADC_Read10bit(ADC_USB_HOST_MSD_DATA_SOURCE);
-//
-//                charCount = sprintf(printBuffer, "%d\r\n", adcResult);
-//                
-//                //Write some data to the new file.
-//                FILEIO_Write(printBuffer, 1, charCount, &myFile);
-//            }
 
-//            if(BUTTON_IsPressed(BUTTON_USB_HOST_MSD_DATA_LOGGER) == true)
-//            {
-                demoState = CLOSING_FILE;
-//            }
+                /* Get current date and time */
+                RTCC_TimeGet(&current_time);
+            
+                memset(buffer, '\0', sizeof(buffer));
+                
+                sprintf( buffer, "%02d/%02d/20%02d,%02d:%02d:%02d,%d\n",
+                    current_time.tm_mday,
+                    current_time.tm_mon,
+                    current_time.tm_year,
+                    current_time.tm_hour,
+                    current_time.tm_min,
+                    current_time.tm_sec,
+                    measure);
+                
+                FILEIO_Write( buffer, 1, strlen(buffer), &myFile );
+            
+            demoState = CLOSING_FILE;
+
             break;
 
         case CLOSING_FILE:
@@ -207,13 +186,14 @@ void APP_HostMSDDataLoggerTasks()
             if (previous_demoState != demoState)
             {
                 previous_demoState = demoState;
-                printf("CLOSING_FILE\n");
+                printf("\t\tCLOSING_FILE\n");
             }
             //Always make sure to close the file so that the data gets
             //  written to the drive.
             FILEIO_Close(&myFile);
-//            TIMER_CancelTick(&APP_HostMSDDataLoggerTickHandler);
 
+            setLedsStatusColor( LED_PITTAG_ACCEPTED );
+            
             demoState = UNMOUNT_DRIVE;
             break;
 
@@ -222,27 +202,41 @@ void APP_HostMSDDataLoggerTasks()
             if (previous_demoState != demoState)
             {
                 previous_demoState = demoState;
-                printf("UNMOUNT_DRIVE\n");
+                printf("\t\tUNMOUNT_DRIVE\n");
             }
             // Unmount the drive since it is no longer in use.
             FILEIO_DriveUnmount ('A');
 
             //Now that we are done writing, we can do nothing until the
             //  drive is removed.
-            demoState = WAITING_FOR_DETACH;
-            break;
-
-        case WAITING_FOR_DETACH:
             
-            if (previous_demoState != demoState)
-            {
-                previous_demoState = demoState;
-                printf("WAITING_FOR_DETACH\n");
-            }
-            setLedsStatusColor( LED_GREEN );
+            setLedsStatusColor( LEDS_OFF );
+            
+            task_complete = true;
             break;
 
         default:
             break;
     }
+    
+    return task_complete;
+}
+
+void GetTimestamp( FILEIO_TIMESTAMP * timestamp )
+{
+    /* help_mla_fileio.pdf 
+     * 1.7.1.3.32 FILEIO_TimestampGet Type */
+
+    struct tm current_time;
+    
+    /* Get current date and time */
+    RTCC_TimeGet(&current_time);
+
+    timestamp->date.bitfield.day = current_time.tm_mday;
+    timestamp->date.bitfield.month = current_time.tm_mon;
+    timestamp->date.bitfield.year = current_time.tm_year + 20; // 2000-1980 = 20
+    timestamp->time.bitfield.hours = current_time.tm_hour;
+    timestamp->time.bitfield.secondsDiv2 = current_time.tm_sec / 2;
+    timestamp->time.bitfield.minutes = current_time.tm_min;
+    timestamp->timeMs = 0;
 }

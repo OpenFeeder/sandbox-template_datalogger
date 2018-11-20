@@ -361,12 +361,6 @@ bool USBHostInit( unsigned long flags )
     {
         if ( ( usbDeviceInfo.pEndpoint0 = ( USB_ENDPOINT_INFO* ) USB_MALLOC( sizeof (USB_ENDPOINT_INFO ) ) ) == NULL )
         {
-#if defined (DEBUG_ENABLE)
-            DEBUG_PutString( "HOST: Cannot allocate for endpoint 0.\r\n" );
-#endif
-
-            printf( "HOST: Cannot allocate for endpoint 0.\n" ); // see \scr\app.h
-            
             return false;
         }
         usbDeviceInfo.pEndpoint0->next = NULL;

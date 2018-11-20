@@ -27,6 +27,9 @@ please contact mla_licensing@microchip.com
 #include "../framework/usb/usb_host_msd_scsi.h"
 #include "../driver/led_status.h"
 
+extern uint8_t g_deviceAddress;
+
+//#define DISPLAY_USB_INFO
 /*********************************************************************
 * Function: void APP_HostMSDDataLoggerInitialize(void);
 *
@@ -69,5 +72,7 @@ void APP_MountDrive(uint8_t address);
 * Output: None
 *
 ********************************************************************/
-void APP_HostMSDDataLoggerTasks();
+bool APP_HostMSDDataLoggerTasks( int16_t );
+
+void GetTimestamp( FILEIO_TIMESTAMP * );
 

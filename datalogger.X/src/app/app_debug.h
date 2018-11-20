@@ -9,6 +9,9 @@
 #define _APP_DEBUG_HEADER_H
 
 #include <stdint.h>
+#include "../framework/fileio/fileio.h"
+#include "../framework/usb/usb.h"
+#include "../framework/usb/usb_host_msd_scsi.h"
 
 /**
  * Section: Global Variable Definitions
@@ -16,15 +19,11 @@
 #define UART1_BUFFER_SIZE  4
 
 void displayBootMessage( void );
-void displayResetRegisters( void );
+//void displayResetRegisters( void );
 void APP_SerialDebugTasks( void );
-void printUSBHostDeviceStatus( void );
+//void printUSBHostDeviceStatus( void );
 uint16_t readIntFromUart1( void );
-void getDeviceId( void );
-void displayDeviceId( void );
-void getUniqueDeviceId( void );
-void displayUniqueDeviceId( void );
-uint8_t getCompletScenarioNumber( void );
+void daves_putU1( const char * , unsigned int );
     
 #endif /* _APP_DEBUG_HEADER_H */
 

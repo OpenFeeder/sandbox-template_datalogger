@@ -9,6 +9,8 @@
         <itemPath>src/app/app_usb.h</itemPath>
         <itemPath>src/app/app_timers_callback.h</itemPath>
         <itemPath>src/app/app_host_msd_data_logger.h</itemPath>
+        <itemPath>src/app/app_alarm.h</itemPath>
+        <itemPath>src/app/app_measure.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f1" displayName="driver" projectFiles="true">
         <itemPath>src/driver/led_status.h</itemPath>
@@ -63,6 +65,8 @@
         <itemPath>src/app/app_usb.c</itemPath>
         <itemPath>src/app/app_timers_callback.c</itemPath>
         <itemPath>src/app/app_host_msd_data_logger.c</itemPath>
+        <itemPath>src/app/app_alarm.c</itemPath>
+        <itemPath>src/app/app_measure.c</itemPath>
       </logicalFolder>
       <logicalFolder name="f1" displayName="driver" projectFiles="true">
         <itemPath>src/driver/led_status.c</itemPath>
