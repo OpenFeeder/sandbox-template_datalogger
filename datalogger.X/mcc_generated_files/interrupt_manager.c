@@ -55,6 +55,9 @@ void INTERRUPT_Initialize (void)
     //    RTCI: RTCC - Real-Time Clock and Calendar
     //    Priority: 1
         IPC15bits.RTCIP = 1;
+    //    TI: T1 - Timer1
+    //    Priority: 1
+        IPC0bits.T1IP = 1;
     //    UERI: U1E - UART1 Error
     //    Priority: 1
         IPC16bits.U1ERIP = 1;
@@ -64,8 +67,5 @@ void INTERRUPT_Initialize (void)
     //    URXI: U1RX - UART1 Receiver
     //    Priority: 1
         IPC2bits.U1RXIP = 1;
-    //    TI: T1 - Timer1
-    //    Priority: 1
-        IPC0bits.T1IP = 1;
 
 }

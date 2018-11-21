@@ -49,7 +49,7 @@
 
 //#define _XTAL_FREQ 8000000  // for XC8...
 //#define FCY 8000000UL/2 // instruction cycle freq for XC16 - FIXME : Test and measure blink with __delay_ms( 10 ) to find right FCY value 
-#include <libpic30.h>
+//#include <libpic30.h>
 
 #include "mcc_generated_files/system.h"
 #include "mcc_generated_files/tmr1.h"
@@ -145,7 +145,6 @@ int main( void )
         /* Go to deep sleep if required */     
         if ( true == go_to_deep_sleep )
         {
-            /* Deep sleep */
             printf("Deep sleep\n");
             while ( !( UART1_StatusGet( ) & UART1_TX_COMPLETE ) )
             {
@@ -154,6 +153,7 @@ int main( void )
 
             setLedsStatusColor( LEDS_OFF );
             
+            /* Enter deep sleep */
             DSCONbits.DSEN = 1;
             DSCONbits.DSEN = 1;
 

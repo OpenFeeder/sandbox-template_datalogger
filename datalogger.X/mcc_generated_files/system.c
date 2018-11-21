@@ -49,8 +49,8 @@
 #include "interrupt_manager.h"
 #include "traps.h"
 #include "uart1.h"
-#include "rtcc.h"
 #include "tmr1.h"
+#include "rtcc.h"
 
 void SYSTEM_Initialize(void)
 {

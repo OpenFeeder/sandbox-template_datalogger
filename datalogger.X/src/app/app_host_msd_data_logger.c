@@ -183,7 +183,7 @@ bool APP_HostMSDDataLoggerTasks( int16_t measure )
             }
 
             /* Get current date and time */
-            RTCC_TimeGet(&current_time);
+            while ( false == RTCC_TimeGet( &current_time ) );
 
             memset(buffer, '\0', sizeof(buffer));
 

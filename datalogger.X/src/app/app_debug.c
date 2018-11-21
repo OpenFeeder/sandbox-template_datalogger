@@ -327,7 +327,7 @@ void APP_SerialDebugTasks( void )
                 
                 struct tm current_time;
                 
-                RTCC_TimeGet( &current_time );
+                while ( false == RTCC_TimeGet( &current_time ) );
     
                 printf( "%02u/%02u/20%02u %02u:%02u:%02u\n",
                         current_time.tm_mday,
