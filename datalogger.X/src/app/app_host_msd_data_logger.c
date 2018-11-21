@@ -33,8 +33,19 @@ typedef enum
     WRITING_TO_FILE,
     CLOSING_FILE,
     UNMOUNT_DRIVE,
-    WAITING_FOR_DETACH
+    WAITING_FOR_DETACH,
+    ERROR
 } USB_HOST_MSD_DATA_LOGGER_DEMO_STATE;
+
+typedef enum
+{
+    ERROR_NONE,
+    ERROR_DRIVE_MOUNT_FAILED,
+    ERROR_DRIVE_UNMOUNT_FAILED,        
+    ERROR_FILE_OPEN_FAILED,
+    ERROR_FILE_CLOSE_FAILED,    
+    ERROR_FILE_WRITE_FAILED
+} USB_ERROR;
 
 static USB_HOST_MSD_DATA_LOGGER_DEMO_STATE demoState;
 static USB_HOST_MSD_DATA_LOGGER_DEMO_STATE previous_demoState;
@@ -99,6 +110,8 @@ bool APP_HostMSDDataLoggerTasks( int16_t measure )
     bool task_complete = false;
     char buffer[100];
     struct tm current_time;
+    USB_ERROR error = ERROR_NONE;
+    size_t num_data_written = 0;
     
     if(FILEIO_MediaDetect(&gUSBDrive, &g_deviceAddress) == false)
     {
@@ -129,8 +142,13 @@ bool APP_HostMSDDataLoggerTasks( int16_t measure )
 
             if( FILEIO_DriveMount ('A', &gUSBDrive, &g_deviceAddress) == FILEIO_ERROR_NONE)
             {
+                LED_STATUS_B_SetHigh( );                
                 demoState = OPENING_FILE;
-                setLedsStatusColor( LED_PITTAG_ACCEPTED );
+            }
+            else
+            {
+                error = ERROR_DRIVE_MOUNT_FAILED;
+                demoState = ERROR;
             }
   
             break;
@@ -142,15 +160,18 @@ bool APP_HostMSDDataLoggerTasks( int16_t measure )
             {
                 previous_demoState = demoState;
                 printf("\t\tOPENING_FILE\n");
-            }
-            
-            setLedsStatusColor( LEDS_TOO_MANY_SOFTWARE_RESET );            
+            }         
                 
             if(FILEIO_Open(&myFile, "LOG.CSV", FILEIO_OPEN_WRITE | FILEIO_OPEN_CREATE | FILEIO_OPEN_APPEND) == FILEIO_RESULT_SUCCESS)
             {
                 demoState = WRITING_TO_FILE;
-                break;
             }
+            else
+            {
+                error = ERROR_FILE_OPEN_FAILED;
+                demoState = ERROR;
+            }
+            
             break;
 
         case WRITING_TO_FILE:
@@ -161,23 +182,31 @@ bool APP_HostMSDDataLoggerTasks( int16_t measure )
                 printf("\t\tWRITING_TO_FILE\n");
             }
 
-                /* Get current date and time */
-                RTCC_TimeGet(&current_time);
+            /* Get current date and time */
+            RTCC_TimeGet(&current_time);
+
+            memset(buffer, '\0', sizeof(buffer));
+
+            sprintf( buffer, "%02d/%02d/20%02d,%02d:%02d:%02d,%d\n",
+                current_time.tm_mday,
+                current_time.tm_mon,
+                current_time.tm_year,
+                current_time.tm_hour,
+                current_time.tm_min,
+                current_time.tm_sec,
+                measure);
+
+            num_data_written = FILEIO_Write( buffer, 1, strlen(buffer), &myFile );
             
-                memset(buffer, '\0', sizeof(buffer));
-                
-                sprintf( buffer, "%02d/%02d/20%02d,%02d:%02d:%02d,%d\n",
-                    current_time.tm_mday,
-                    current_time.tm_mon,
-                    current_time.tm_year,
-                    current_time.tm_hour,
-                    current_time.tm_min,
-                    current_time.tm_sec,
-                    measure);
-                
-                FILEIO_Write( buffer, 1, strlen(buffer), &myFile );
-            
-            demoState = CLOSING_FILE;
+            if ( num_data_written == strlen(buffer) )
+            {            
+                demoState = CLOSING_FILE;
+            }
+            else
+            {
+                error = ERROR_FILE_WRITE_FAILED;
+                demoState = ERROR;
+            }
 
             break;
 
@@ -190,11 +219,16 @@ bool APP_HostMSDDataLoggerTasks( int16_t measure )
             }
             //Always make sure to close the file so that the data gets
             //  written to the drive.
-            FILEIO_Close(&myFile);
-
-            setLedsStatusColor( LED_PITTAG_ACCEPTED );
+            if ( FILEIO_Close(&myFile) == FILEIO_RESULT_SUCCESS)
+            {
+                demoState = UNMOUNT_DRIVE;                
+            }
+            else
+            {
+                error = ERROR_FILE_CLOSE_FAILED;
+                demoState = ERROR;
+            }
             
-            demoState = UNMOUNT_DRIVE;
             break;
 
         case UNMOUNT_DRIVE:
@@ -205,12 +239,45 @@ bool APP_HostMSDDataLoggerTasks( int16_t measure )
                 printf("\t\tUNMOUNT_DRIVE\n");
             }
             // Unmount the drive since it is no longer in use.
-            FILEIO_DriveUnmount ('A');
+            if (FILEIO_DriveUnmount ('A')  == FILEIO_ERROR_NONE )
+            {
 
-            //Now that we are done writing, we can do nothing until the
-            //  drive is removed.
+                LED_STATUS_B_SetLow( );
+                //Now that we are done writing, we can do nothing until the
+                //  drive is removed.
+
+                task_complete = true;
+            }
+            else
+            {
+                error = ERROR_DRIVE_UNMOUNT_FAILED;
+                demoState = ERROR;
+            }
+            break;
             
-            setLedsStatusColor( LEDS_OFF );
+        case ERROR:
+            
+            switch (error)
+            {                
+                case ERROR_DRIVE_MOUNT_FAILED:
+                    printf("\t\tERROR_DRIVE_MOUNT_FAILED\n");
+                    break;
+                case ERROR_DRIVE_UNMOUNT_FAILED:
+                    printf("\t\tERROR_DRIVE_UNMOUNT_FAILED\n");
+                    break;      
+                case ERROR_FILE_OPEN_FAILED:
+                    printf("\t\tERROR_FILE_OPEN_FAILED\n");
+                    break;
+                case ERROR_FILE_CLOSE_FAILED:
+                    printf("\t\tERROR_FILE_CLOSE_FAILED\n");
+                    break;   
+                case ERROR_FILE_WRITE_FAILED:
+                    printf("\t\tERROR_FILE_WRITE_FAILED\n");
+                    break;
+                default:
+                    printf("\t\tERROR: %d\n", error);
+                    break;
+            }
             
             task_complete = true;
             break;

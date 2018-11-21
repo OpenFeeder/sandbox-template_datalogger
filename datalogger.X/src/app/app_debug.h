@@ -18,6 +18,8 @@
  */
 #define UART1_BUFFER_SIZE  4
 
+#define FILEIO_EXPORT_BUFFER_SIZE 200
+
 void displayBootMessage( void );
 //void displayResetRegisters( void );
 void APP_SerialDebugTasks( void );

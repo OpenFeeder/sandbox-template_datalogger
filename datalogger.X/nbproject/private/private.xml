@@ -3,15 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/github/openfeeder/sandbox-template_datalogger/datalogger.X/src/app/app_debug.h</file>
-            <file>file:/D:/github/openfeeder/sandbox-template_datalogger/datalogger.X/src/app/app_host_msd_data_logger.h</file>
-            <file>file:/D:/github/openfeeder/sandbox-template_datalogger/datalogger.X/src/app/app_debug.c</file>
             <file>file:/D:/github/openfeeder/sandbox-template_datalogger/datalogger.X/src/app/app_host_msd_data_logger.c</file>
             <file>file:/D:/github/openfeeder/sandbox-template_datalogger/datalogger.X/main.c</file>
-            <file>file:/D:/github/openfeeder/sandbox-template_datalogger/datalogger.X/src/app/app_usb.h</file>
+            <file>file:/D:/github/openfeeder/sandbox-template_datalogger/datalogger.X/src/driver/led_status.c</file>
             <file>file:/D:/github/openfeeder/sandbox-template_datalogger/datalogger.X/mcc_generated_files/rtcc.c</file>
-            <file>file:/D:/github/openfeeder/sandbox-template_datalogger/datalogger.X/src/driver/led_status.h</file>
-            <file>file:/D:/github/openfeeder/sandbox-template_datalogger/datalogger.X/src/app/app_usb.c</file>
+            <file>file:/D:/github/openfeeder/sandbox-template_datalogger/datalogger.X/src/app/app_measure.c</file>
         </group>
     </open-files>
 </project-private>

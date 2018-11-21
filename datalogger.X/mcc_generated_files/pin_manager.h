@@ -201,6 +201,152 @@
 #define IO_RB13_SetDigitalOutput() _TRISB13 = 0
 /**
   @Summary
+    Sets the GPIO pin, RD11, high using LATD11.
+
+  @Description
+    Sets the GPIO pin, RD11, high using LATD11.
+
+  @Preconditions
+    The RD11 must be set to an output.
+
+  @Returns
+    None.
+
+  @Param
+    None.
+
+  @Example
+    <code>
+    // Set RD11 high (1)
+    USER_BUTTON_SetHigh();
+    </code>
+
+*/
+#define USER_BUTTON_SetHigh()          _LATD11 = 1
+/**
+  @Summary
+    Sets the GPIO pin, RD11, low using LATD11.
+
+  @Description
+    Sets the GPIO pin, RD11, low using LATD11.
+
+  @Preconditions
+    The RD11 must be set to an output.
+
+  @Returns
+    None.
+
+  @Param
+    None.
+
+  @Example
+    <code>
+    // Set RD11 low (0)
+    USER_BUTTON_SetLow();
+    </code>
+
+*/
+#define USER_BUTTON_SetLow()           _LATD11 = 0
+/**
+  @Summary
+    Toggles the GPIO pin, RD11, using LATD11.
+
+  @Description
+    Toggles the GPIO pin, RD11, using LATD11.
+
+  @Preconditions
+    The RD11 must be set to an output.
+
+  @Returns
+    None.
+
+  @Param
+    None.
+
+  @Example
+    <code>
+    // Toggle RD11
+    USER_BUTTON_Toggle();
+    </code>
+
+*/
+#define USER_BUTTON_Toggle()           _LATD11 ^= 1
+/**
+  @Summary
+    Reads the value of the GPIO pin, RD11.
+
+  @Description
+    Reads the value of the GPIO pin, RD11.
+
+  @Preconditions
+    None.
+
+  @Returns
+    None.
+
+  @Param
+    None.
+
+  @Example
+    <code>
+    uint16_t portValue;
+
+    // Read RD11
+    postValue = USER_BUTTON_GetValue();
+    </code>
+
+*/
+#define USER_BUTTON_GetValue()         _RD11
+/**
+  @Summary
+    Configures the GPIO pin, RD11, as an input.
+
+  @Description
+    Configures the GPIO pin, RD11, as an input.
+
+  @Preconditions
+    None.
+
+  @Returns
+    None.
+
+  @Param
+    None.
+
+  @Example
+    <code>
+    // Sets the RD11 as an input
+    USER_BUTTON_SetDigitalInput();
+    </code>
+
+*/
+#define USER_BUTTON_SetDigitalInput()  _TRISD11 = 1
+/**
+  @Summary
+    Configures the GPIO pin, RD11, as an output.
+
+  @Description
+    Configures the GPIO pin, RD11, as an output.
+
+  @Preconditions
+    None.
+
+  @Returns
+    None.
+
+  @Param
+    None.
+
+  @Example
+    <code>
+    // Sets the RD11 as an output
+    USER_BUTTON_SetDigitalOutput();
+    </code>
+
+*/
+#define USER_BUTTON_SetDigitalOutput() _TRISD11 = 0
+/**
+  @Summary
     Sets the GPIO pin, RE3, high using LATE3.
 
   @Description

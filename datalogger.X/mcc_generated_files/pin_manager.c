@@ -116,7 +116,7 @@ void PIN_MANAGER_Initialize(void)
      ***************************************************************************/
     ANSA = 0xC6ED;
     ANSB = 0x1FFC;
-    ANSD = 0x0FFF;
+    ANSD = 0x07FF;
     ANSE = 0x0007;
     ANSF = 0x313E;
     ANSG = 0xF3C3;

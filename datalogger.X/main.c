@@ -62,10 +62,15 @@
 #include "src/app/app_host_msd_data_logger.h"
 #include "src/app/app_alarm.h" 
 #include "src/app/app_measure.h" 
+#include "src/driver/buttons.h"
+#include "src/driver/power.h"
 
-bool powerOnUsbDevice(void);
-bool powerOffUsbDevice(void);
+#define INFINITE_LOOP_MODE 0
+#define SERIAL_COMMUNICATION_MODE 1
 
+uint8_t mode = INFINITE_LOOP_MODE;
+uint8_t previous_mode = SERIAL_COMMUNICATION_MODE;
+    
 //int main( void )
 //{
 //    TRISEbits.TRISE4 = 0; // RE04
@@ -88,7 +93,7 @@ int main( void )
     bool is_measure_get = false;
     bool is_usb_powered = false;
     bool task_complete = false;
-    int16_t measure = 0;
+    int16_t measure = 0;   
     
     /* Initialize the device */
     SYSTEM_Initialize( );
@@ -147,6 +152,8 @@ int main( void )
             // Wait for the tranmission to complete
             }   
 
+            setLedsStatusColor( LEDS_OFF );
+            
             DSCONbits.DSEN = 1;
             DSCONbits.DSEN = 1;
 
@@ -159,87 +166,95 @@ int main( void )
             // Wait for the tranmission to complete
             } 
             
-            /* Initialize data logger stack*/
-            APP_HostMSDDataLoggerInitialize();
-            
-            go_to_deep_sleep = false;
-            is_measure_get = false;
-            task_complete = false;
-            is_usb_powered = false;
+            if ( BUTTON_PRESSED == USER_BUTTON_GetValue( ) )
+            {
+                go_to_deep_sleep = false;
+                is_usb_powered = false;
+                mode = SERIAL_COMMUNICATION_MODE;
+            }
+            else
+            {
+                /* Initialize data logger stack*/
+                APP_HostMSDDataLoggerInitialize();
+
+                go_to_deep_sleep = false;
+                is_measure_get = false;
+                task_complete = false;
+                is_usb_powered = false;
+                mode = INFINITE_LOOP_MODE;                
+            }
   
         }
 
-        /* If no measure => get data from the sensor */
-        if ( false == is_measure_get )
+        if (previous_mode != mode)
         {
-            /* Get measure from sensor */
-            is_measure_get = getMeasure(&measure); 
-        }
- 
-        /* If measure available and USB power off => power on USB */
-        if ( true == is_measure_get && false == is_usb_powered)
-        {
-            /* Power on USB device */
-            is_usb_powered = powerOnUsbDevice();
-            
-            setLedsStatusColor( LED_GREEN );
-            
-            printf("\tPower on USB\n");
+            previous_mode = mode;
+            if ( SERIAL_COMMUNICATION_MODE == mode)
+            {
+                printf("Enter serial mode\nTo quit, enter x or X, or press the reset button\n"); 
+            }
+            else
+            {
+                printf("Enter infinite loop mode\n"); 
+            }
             while ( !( UART1_StatusGet( ) & UART1_TX_COMPLETE ) )
             {
             // Wait for the tranmission to complete
-            }
+            } 
         }
-   
-        /* If measure available and USB power on => run the datalogger */
-        if ( true == is_measure_get && true == is_usb_powered)
+        
+        if ( INFINITE_LOOP_MODE == mode )
         {
-            /* Host data logger task*/
-            task_complete = APP_HostMSDDataLoggerTasks( measure );            
-        }
+            /* If no measure => get data from the sensor */
+            if ( false == is_measure_get )
+            {
+                /* Get measure from sensor */
+                is_measure_get = getMeasure(&measure); 
+            }
 
-        /* If the data logger compete its task => go to deep sleep mode */
-        if (true == task_complete )
-        {
-            /* Power off USB device */
-            powerOffUsbDevice();   
-            setLedsStatusColor( LEDS_OFF );
-            is_usb_powered = false;
-            go_to_deep_sleep = true;
-            printf("\tPower off USB\n");
-            while ( !( UART1_StatusGet( ) & UART1_TX_COMPLETE ) )
+            /* If measure available and USB power off => power on USB */
+            if ( true == is_measure_get && false == is_usb_powered)
             {
-            // Wait for the tranmission to complete
+                /* Power on USB device */
+                is_usb_powered = powerOnUsbDevice();
             }
+
+            /* If measure available and USB power on => run the datalogger */
+            if ( true == is_measure_get && true == is_usb_powered)
+            {
+                /* Host data logger task*/
+                task_complete = APP_HostMSDDataLoggerTasks( measure );            
+            }
+
+            /* If the data logger compete its task => go to deep sleep mode */
+            if (true == task_complete )
+            {
+                /* Power off USB device */
+                powerOffUsbDevice();   
+
+                is_usb_powered = false;
+                go_to_deep_sleep = true;
+                
+            }   
         }
+        else
+        {
+            if ( false == is_usb_powered)
+            {
+                /* Power on USB device */
+                is_usb_powered = powerOnUsbDevice();
+            }
+            else
+            {
+                APP_SerialDebugTasks( );            
+            }
+        }      
         
         /* Maintain Device Drivers. */
         USBTasks( );
-        
-//        APP_SerialDebugTasks( );
-        
     }
 
     return 1;
-}
-
-bool powerOnUsbDevice() 
-{
-    // Power on the voltage regulator U5 (MIC39101 - 5.0YM)
-    _LATB13 = 1;
-    _LATF0 = 0; // powered the USB connector
-    _TRISF0 = 0;
-    
-    return true;
-}
-
-bool powerOffUsbDevice() 
-{
-    _TRISF0 = 1;
-    // Power off the voltage regulator U5 (MIC39101 - 5.0YM)
-    _LATB13 = 0;
-    
-    return true;
 }
 
 /**
